@@ -18,10 +18,22 @@
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-secondary: var(--secondary);
+
+  /* Mobile-first breakpoints for real devices */
+  --breakpoint-xs: 375px;  /* Small phones */
+  --breakpoint-sm: 430px;  /* All phones up to Pro Max / Ultra */
+  --breakpoint-md: 768px;  /* Tablets */
+  --breakpoint-lg: 1024px; /* Desktop */
+  --breakpoint-xl: 1280px; /* Large desktop */
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: 'Inter', sans-serif;
+  overscroll-behavior: none;
+}
+
+html {
+  overscroll-behavior: none;
 }

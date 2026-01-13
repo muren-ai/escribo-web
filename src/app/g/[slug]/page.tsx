@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { MessageCircle, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 
 // Types matching FastAPI response
 interface Garment {
@@ -69,72 +69,73 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
 
     const story = garment.current_story;
 
+    // Randomly select footer image for this render
+    const footerImage = Math.random() > 0.5 ? '/footer-person.png' : '/footer-tv.png';
+
     return (
-        <div className="min-h-screen bg-white flex flex-col font-sans">
+        <div className="min-h-screen bg-white flex flex-col font-sans relative overflow-hidden overscroll-none">
             {/* Background Pattern */}
             <div className="absolute inset-0 bg-[url('/doodle-bg.png')] bg-repeat opacity-100 pointer-events-none z-0"></div>
 
             {/* Header */}
-            <header className="relative z-10 w-full py-6 flex justify-center">
-                <Link href="/" className="flex items-center gap-2">
+            <header className="relative z-10 w-full py-6 sm:py-6 md:py-8 flex justify-center">
+                <Link href="/" className="transition-transform hover:scale-105">
                     <img
                         src="/escribo-logo.svg"
                         alt="Escribo Logo"
-                        className="h-8 md:h-10 w-auto"
+                        className="h-12 sm:h-14 md:h-20 lg:h-25 w-auto"
                     />
                 </Link>
             </header>
 
             {/* Main Content */}
-            <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 md:px-6 w-full max-w-7xl mx-auto">
+            <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 w-full max-w-7xl mx-auto py-4 sm:py-6 md:py-8 md:-mt-8">
 
                 {/* Story Card */}
-                <div className="w-full max-w-md md:max-w-4xl flex flex-col items-center mb-12">
+                <div className="w-full max-w-[280px] sm:max-w-sm flex flex-col items-center">
 
-                    <div className="relative w-full aspect-[4/5] md:aspect-video max-h-[600px] bg-gray-100 rounded-[32px] overflow-hidden shadow-2xl border-4 border-white">
-                        {/* 
-                If we had a user image/video, it would go here. 
-                For now, we use a placeholder styling based on the user's mood color 
-             */}
+                    <div className="relative w-full aspect-[4/5] bg-gray-100 rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl border-[4px] sm:border-[6px] border-white ring-1 ring-black/5">
                         <div
-                            className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center"
-                            style={{ backgroundColor: story?.background_color || '#F5F3FF' }}
+                            className="absolute inset-0 flex flex-col items-center justify-center p-6 sm:p-8 text-center transition-colors duration-500"
+                            style={{ backgroundColor: story?.background_color || '#F3E8FF' }}
                         >
                             {story ? (
-                                <>
+                                <div className="flex flex-col items-center justify-center h-full max-h-full overflow-y-auto w-full no-scrollbar pb-14 sm:pb-16">
                                     {story.emoji && (
-                                        <div className="text-8xl md:text-9xl mb-6 animate-in zoom-in duration-500">
+                                        <div className="text-7xl sm:text-8xl md:text-9xl mb-4 sm:mb-6 animate-in zoom-in duration-700 drop-shadow-sm transform hover:scale-110 transition-transform cursor-default">
                                             {story.emoji}
                                         </div>
                                     )}
-                                    <p className="text-2xl md:text-3xl font-medium text-foreground max-w-2xl leading-relaxed">
+                                    <p className="text-xl sm:text-2xl md:text-3xl font-medium text-slate-800 max-w-sm leading-snug font-display px-2">
                                         "{story.content}"
                                     </p>
-                                    <p className="mt-8 text-sm opacity-60 uppercase tracking-widest text-xs">
-                                        Shared {new Date(story.created_at).toLocaleDateString()}
+                                    <p className="mt-6 sm:mt-8 text-xs font-semibold opacity-40 uppercase tracking-[0.2em] text-slate-900">
+                                        Shared {new Date(story.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                                     </p>
-                                </>
+                                </div>
                             ) : (
-                                <div className="text-gray-400 flex flex-col items-center">
-                                    <span className="text-6xl mb-4">👕</span>
-                                    <p className="text-xl">This garment has no story yet.</p>
+                                <div className="text-slate-400 flex flex-col items-center animate-pulse">
+                                    <span className="text-6xl mb-4 grayscale opacity-50">👕</span>
+                                    <p className="text-lg font-medium">No story yet</p>
                                 </div>
                             )}
 
-                            {/* Overlay Gradient (similar to design "Mood today" bar) */}
+                            {/* Overlay Gradient "Mood today" */}
                             {story && (
-                                <div className="absolute bottom-8 left-8 right-8 bg-black/40 backdrop-blur-md rounded-2xl py-3 px-6 text-white text-center">
-                                    <span className="text-sm font-medium">Mood today</span>
+                                <div className="absolute bottom-4 sm:bottom-6 inset-x-4 sm:inset-x-6">
+                                    <div className="bg-black/20 backdrop-blur-md rounded-xl sm:rounded-2xl py-2.5 sm:py-3 px-4 sm:px-6 text-white text-center border border-white/10 shadow-lg">
+                                        <span className="text-xs sm:text-sm font-medium tracking-wide">Mood today</span>
+                                    </div>
                                 </div>
                             )}
                         </div>
                     </div>
 
-                    {/* Action Button - Just a placeholder visually matching the design */}
-                    <div className="mt-8">
-                        <button className="bg-primary hover:bg-primary-hover text-white px-8 py-3 rounded-full font-medium transition-all shadow-lg shadow-purple-200 transform hover:scale-105 active:scale-95 flex items-center gap-2">
-                            Download App to Interact
-                        </button>
+                    {/* Action Button */}
+                    <div className="mt-6 sm:mt-8 md:mt-10 animate-in slide-in-from-bottom-4 duration-1000 delay-300">
+                        <a href="https://escribo.ai/download" className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-semibold text-white transition-all duration-200 bg-primary rounded-full hover:bg-primary-hover hover:scale-105 hover:shadow-xl hover:shadow-primary/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            <span>Add a comment</span>
+                        </a>
                     </div>
 
                 </div>
@@ -142,28 +143,43 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
             </main>
 
             {/* Footer / App Promo CTA */}
-            <footer className="relative z-10 w-full bg-primary text-white py-16 px-6 overflow-hidden mt-auto">
-                {/* Abstract shapes in background of footer */}
-                <div className="absolute inset-0 opacity-10 bg-[url('/doodle-bg.png')] bg-repeat mix-blend-overlay"></div>
+            <footer className="relative z-10 w-full bg-[#5B4DFF] text-white overflow-hidden mt-auto" style={{ 
+                backgroundImage: "url('/footer-doodle.png')", 
+                backgroundRepeat: "repeat"
+            }}>
 
-                <div className="relative max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">
-                        Get your wearable to express<br />something like this
-                    </h2>
-                    <p className="text-primary-100 mb-8 max-w-lg mx-auto opacity-90">
-                        Create a message, link it to a QR, and let it live beyond the screen.
-                    </p>
+                <div className="relative max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-end justify-between">
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <button className="bg-white text-primary px-6 py-3 rounded-full font-semibold flex items-center gap-2 hover:bg-gray-50 transition-colors">
-                            <Download size={20} />
-                            Download on App Store
-                        </button>
-                        <button className="bg-white text-primary px-6 py-3 rounded-full font-semibold flex items-center gap-2 hover:bg-gray-50 transition-colors">
-                            <Download size={20} />
-                            Get it on Google Play
-                        </button>
+                    {/* Left Side: Content */}
+                    <div className="text-center md:text-left max-w-xl z-10 flex-1 py-8 sm:py-10 md:py-12 lg:py-16 px-4 sm:px-6 flex flex-col justify-center items-center md:items-start">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 tracking-tight leading-tight">
+                            Get your wearable to express something like this
+                        </h2>
+                        <p className="hidden md:block text-indigo-100 mb-6 text-sm sm:text-base leading-relaxed opacity-95 max-w-md">
+                            Create a message, link it to a QR, and let it live beyond the screen.
+                        </p>
+
+                        <div className="flex flex-col w-full max-w-xs sm:max-w-none sm:w-auto sm:flex-row items-center sm:items-start gap-3 sm:gap-4 md:mt-0 mt-4">
+                            <button className="bg-[#E5E5E5] text-black h-12 px-6 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-[#D5D5D5] transition-all whitespace-nowrap">
+                                <img src="/download-apple.svg" alt="" className="w-5 h-5" />
+                                <span className="text-sm sm:text-base">Download on App Store</span>
+                            </button>
+                            <button className="bg-[#E5E5E5] text-black h-12 px-6 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-[#D5D5D5] transition-all whitespace-nowrap">
+                                <img src="/download-android.svg" alt="" className="w-5 h-5" />
+                                <span className="text-sm sm:text-base">Get it on Google Play</span>
+                            </button>
+                        </div>
                     </div>
+
+                    {/* Right Side: Random Image - Glued to bottom, smaller size */}
+                    <div className={`hidden md:block relative z-10 w-80 self-end ${footerImage === '/footer-tv.png' ? 'mt-16' : 'mt-8'}`}>
+                        <img
+                            src={footerImage}
+                            alt="Escribo App Preview"
+                            className="w-full h-auto object-contain object-bottom drop-shadow-2xl"
+                        />
+                    </div>
+
                 </div>
             </footer>
         </div>

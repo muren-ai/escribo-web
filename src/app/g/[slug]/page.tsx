@@ -1,14 +1,8 @@
-import { Metadata, Viewport } from 'next';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Download } from 'lucide-react';
 import ClientActionButton from './ClientActionButton';
-
-// Force the Safari title bar to be white for this specific page
-export const viewport: Viewport = {
-    themeColor: "#ffffff",
-    viewportFit: "cover",
-};
 
 // Types matching FastAPI response
 interface Garment {
@@ -81,21 +75,7 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
     const footerImage = slugCharSum % 2 === 0 ? '/footer-person.png' : '/footer-tv.png';
 
     return (
-        <>
-            <style dangerouslySetInnerHTML={{
-                __html: `
-                html {
-                    background: linear-gradient(to bottom, #ffffff 50%, #5B4DFF 50%) !important;
-                    overscroll-behavior: auto !important;
-                }
-                body {
-                    background-color: transparent !important;
-                }
-                body::before {
-                    background-color: transparent !important;
-                }
-            ` }} />
-            <div className="min-h-screen bg-transparent flex flex-col font-sans relative overflow-hidden">
+        <div className="min-h-screen bg-white flex flex-col font-sans relative overflow-hidden overscroll-none">
                 {/* Header */}
                 <header className="relative z-10 w-full py-6 sm:py-6 md:py-8 flex justify-center">
                     <Link href="/" className="transition-transform hover:scale-105">
@@ -198,8 +178,7 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
                         </div>
 
                     </div>
-                </footer>
-            </div>
-        </>
+            </footer>
+        </div>
     );
 }

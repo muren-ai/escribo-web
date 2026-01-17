@@ -123,16 +123,7 @@ export default function AdminDashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-secondary/10 p-6 md:p-12 font-sans relative overflow-hidden">
-            {/* Background Pattern */}
-            <div
-                className="absolute inset-0 z-0 opacity-40 pointer-events-none"
-                style={{
-                    backgroundImage: 'url(/doodle-bg.png)',
-                    backgroundSize: '600px',
-                    backgroundRepeat: 'repeat',
-                }}
-            />
+        <div className="min-h-screen bg-transparent p-6 md:p-12 font-sans relative overflow-hidden">
             <div className="max-w-5xl mx-auto relative z-10">
 
                 {/* Header */}

@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import AppBanner from "./components/AppBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +14,14 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#4F39F6",
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "Escribo - Interactive Storytelling Through QR-Coded Apparel",
@@ -28,6 +37,10 @@ export const metadata: Metadata = {
     capable: true,
     title: "Escribo",
     statusBarStyle: "black-translucent",
+  },
+  // Native Apple Smart App Banner for iOS Safari
+  itunes: {
+    appId: "YOUR_APP_ID", // Replace with your actual App ID
   },
   openGraph: {
     type: "website",
@@ -51,12 +64,6 @@ export const metadata: Metadata = {
     description: "Scan QR codes on apparel, claim items, write your story, and share your journey.",
     images: ["/icon-512.png"],
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-  },
-  themeColor: "#4F39F6",
   colorScheme: "light",
   robots: {
     index: true,
@@ -71,9 +78,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Fallback for native smart banner if itunes metadata doesn't render it correctly */}
+        <meta name="apple-itunes-app" content="app-id=YOUR_APP_ID" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <AppBanner />
         {children}
         <Analytics />
         <SpeedInsights />

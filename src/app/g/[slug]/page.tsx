@@ -1,7 +1,14 @@
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Download } from 'lucide-react';
+import ClientActionButton from './ClientActionButton';
+
+// Force the Safari title bar to be white for this specific page
+export const viewport: Viewport = {
+    themeColor: "#ffffff",
+    viewportFit: "cover",
+};
 
 // Types matching FastAPI response
 interface Garment {
@@ -73,10 +80,20 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
     const footerImage = Math.random() > 0.5 ? '/footer-person.png' : '/footer-tv.png';
 
     return (
-        <div className="min-h-screen bg-white flex flex-col font-sans relative overflow-hidden overscroll-none">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 bg-[url('/doodle-bg.png')] bg-repeat opacity-100 pointer-events-none z-0"></div>
-
+        <>
+            <style dangerouslySetInnerHTML={{ __html: `
+                html {
+                    background: linear-gradient(to bottom, #ffffff 50%, #5B4DFF 50%) !important;
+                    overscroll-behavior: auto !important;
+                }
+                body {
+                    background-color: transparent !important;
+                }
+                body::before {
+                    background-color: transparent !important;
+                }
+            ` }} />
+            <div className="min-h-screen bg-transparent flex flex-col font-sans relative overflow-hidden">
             {/* Header */}
             <header className="relative z-10 w-full py-6 sm:py-6 md:py-8 flex justify-center">
                 <Link href="/" className="transition-transform hover:scale-105">
@@ -132,10 +149,8 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
                     </div>
 
                     {/* Action Button */}
-                    <div className="mt-6 sm:mt-8 md:mt-10 animate-in slide-in-from-bottom-4 duration-1000 delay-300">
-                        <a href="https://escribo.ai/download" className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-semibold text-white transition-all duration-200 bg-primary rounded-full hover:bg-primary-hover hover:scale-105 hover:shadow-xl hover:shadow-primary/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                            <span>Add a comment</span>
-                        </a>
+                    <div className="mt-6 sm:mt-8 md:mt-10 animate-in slide-in-from-bottom-4 duration-1000 delay-300 w-full flex justify-center">
+                        <ClientActionButton storyId={story?.id || ''} />
                     </div>
 
                 </div>
@@ -143,8 +158,8 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
             </main>
 
             {/* Footer / App Promo CTA */}
-            <footer className="relative z-10 w-full bg-[#5B4DFF] text-white overflow-hidden mt-auto" style={{ 
-                backgroundImage: "url('/footer-doodle.png')", 
+            <footer className="relative z-10 w-full bg-[#5B4DFF] text-white overflow-hidden mt-auto" style={{
+                backgroundImage: "url('/footer-doodle.png')",
                 backgroundRepeat: "repeat"
             }}>
 
@@ -183,5 +198,6 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
                 </div>
             </footer>
         </div>
+        </>
     );
 }

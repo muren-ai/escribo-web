@@ -4,12 +4,9 @@
   --background: #FFFFFF;
   --foreground: #1A1A1A;
   --primary: #4F39F6;
-  /* Exact Indigo from user */
   --primary-hover: #3D2BC2;
   --secondary: #F5F3FF;
-  /* Light purple background */
   --accent: #FFD700;
-  /* Maybe for small details if needed */
 }
 
 @theme {
@@ -19,21 +16,52 @@
   --color-primary-hover: var(--primary-hover);
   --color-secondary: var(--secondary);
 
-  /* Mobile-first breakpoints for real devices */
-  --breakpoint-xs: 375px;  /* Small phones */
-  --breakpoint-sm: 430px;  /* All phones up to Pro Max / Ultra */
-  --breakpoint-md: 768px;  /* Tablets */
-  --breakpoint-lg: 1024px; /* Desktop */
-  --breakpoint-xl: 1280px; /* Large desktop */
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 430px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+/* 
+  Fix for iOS Safari: 
+  1. Use dvh for true viewport height.
+  2. Apply background to html and body to cover the overscroll canvas.
+  3. Set overscroll-behavior to none to prevent the "rubber-band" effect.
+*/
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  background-image: url("/mobile-doodle-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--background);
+  background-attachment: fixed; /* Keep background static during scroll */
+  
+  /* Prevent overscroll/rubber-banding */
+  overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
+  overscroll-behavior: none;
+  
+  /* Optimization for mobile scrolling */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Desktop version */
+@media (min-width: 768px) {
+  html, body {
+    background-image: url("/doodle-bg.png");
+  }
 }
 
 body {
-  background-color: var(--background);
   color: var(--foreground);
   font-family: 'Inter', sans-serif;
-  overscroll-behavior: none;
-}
-
-html {
-  overscroll-behavior: none;
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
 }

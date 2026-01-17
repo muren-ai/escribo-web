@@ -50,10 +50,7 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-secondary/10 relative overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 bg-[url('/doodle-bg.png')] bg-repeat opacity-100 pointer-events-none z-0"></div>
-
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-transparent relative overflow-hidden">
             <div className="relative z-10 w-full max-w-md bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white">
                 <div className="flex justify-center mb-8">
                     <img src="/escribo-logo.svg" alt="Escribo" className="h-10" />

@@ -75,9 +75,10 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
     }
 
     const story = garment.current_story;
-
-    // Randomly select footer image for this render
-    const footerImage = Math.random() > 0.5 ? '/footer-person.png' : '/footer-tv.png';
+    
+    // Deterministically select footer image based on slug to avoid hydration mismatches
+    const slugCharSum = slug.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const footerImage = slugCharSum % 2 === 0 ? '/footer-person.png' : '/footer-tv.png';
 
     return (
         <>
@@ -127,7 +128,7 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
                                         "{story.content}"
                                     </p>
                                     <p className="mt-6 sm:mt-8 text-xs font-semibold opacity-40 uppercase tracking-[0.2em] text-slate-900">
-                                        Shared {new Date(story.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                                        Shared {new Date(story.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                                     </p>
                                 </div>
                             ) : (

@@ -78,10 +78,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {/* Fallback for native smart banner if itunes metadata doesn't render it correctly */}
-        <meta name="apple-itunes-app" content="app-id=YOUR_APP_ID" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

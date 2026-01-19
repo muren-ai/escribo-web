@@ -94,7 +94,7 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
                 {/* Story Card */}
                 <div className="w-full max-w-[280px] sm:max-w-sm flex flex-col items-center">
 
-                    <div className="relative w-full aspect-[4/5] bg-gray-100 rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl border-[4px] sm:border-[6px] border-white ring-1 ring-black/5">
+                    <div className="relative w-full aspect-[4/5] bg-gray-100 rounded-2xl overflow-hidden shadow-2xl border-[4px] sm:border-[6px] border-white ring-1 ring-black/5">
                         <div
                             className="absolute inset-0 flex flex-col items-center justify-center p-6 sm:p-8 text-center transition-colors duration-500"
                             style={{ backgroundColor: story?.background_color || '#F3E8FF' }}

@@ -138,14 +138,7 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
                                 </div>
                             )}
 
-                            {/* Overlay Gradient "Mood today" */}
-                            {story && (
-                                <div className="absolute bottom-4 sm:bottom-6 inset-x-4 sm:inset-x-6 z-10">
-                                    <div className="bg-black/20 backdrop-blur-md rounded-xl sm:rounded-2xl py-2.5 sm:py-3 px-4 sm:px-6 text-white text-center border border-white/10 shadow-lg">
-                                        <span className="text-xs sm:text-sm font-medium tracking-wide">Mood today</span>
-                                    </div>
-                                </div>
-                            )}
+
                         </div>
                     </div>
 

@@ -12,6 +12,7 @@ export default function AdminDashboard() {
 
     // QR Gen State
     const [genCount, setGenCount] = useState<number | ''>(10)
+    const [garmentType, setGarmentType] = useState<string>('Hoodie')
     const [isGenerating, setIsGenerating] = useState(false)
     const [genSuccess, setGenSuccess] = useState(false)
 
@@ -82,7 +83,7 @@ export default function AdminDashboard() {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${session.access_token}`
                 },
-                body: JSON.stringify({ count })
+                body: JSON.stringify({ count, garment_type: garmentType })
             })
 
             if (!genRes.ok) throw new Error("Generation failed")
@@ -161,6 +162,17 @@ export default function AdminDashboard() {
                         <p className="text-gray-400 text-sm mb-6">Create new inventory & download assets.</p>
 
                         <div className="flex gap-3">
+                            <select
+                                value={garmentType}
+                                onChange={(e) => setGarmentType(e.target.value)}
+                                className="px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-primary/20 outline-none font-semibold text-gray-700"
+                            >
+                                <option value="Hoodie">Hoodie</option>
+                                <option value="T-Shirt">T-Shirt</option>
+                                <option value="Tote Bag">Tote Bag</option>
+                                <option value="Cap">Cap</option>
+                                <option value="Other">Other</option>
+                            </select>
                             <input
                                 type="number"
                                 min="1"

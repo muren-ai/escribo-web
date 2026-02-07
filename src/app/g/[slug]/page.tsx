@@ -4,6 +4,21 @@ import { notFound } from 'next/navigation';
 import { Download } from 'lucide-react';
 import ClientActionButton from './ClientActionButton';
 
+// Convert Flutter ARGB (#AARRGGBB) to CSS RGBA (#RRGGBBAA)
+// Or return default if null/invalid
+function formatColor(hex?: string): string {
+    if (!hex) return '#F3E8FF';
+
+    // Check for Flutter's 8-digit hex #AARRGGBB
+    if (hex.startsWith('#') && hex.length === 9) {
+        const alpha = hex.substring(1, 3);
+        const rgb = hex.substring(3);
+        return `#${rgb}${alpha}`;
+    }
+
+    return hex;
+}
+
 // Types matching FastAPI response
 interface Garment {
     id: string;
@@ -97,7 +112,7 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
                     <div className="relative w-full aspect-[4/5] bg-gray-100 rounded-2xl overflow-hidden shadow-2xl border-[4px] sm:border-[6px] border-white ring-1 ring-black/5">
                         <div
                             className="absolute inset-0 flex flex-col items-center justify-center p-6 sm:p-8 text-center transition-colors duration-500"
-                            style={{ backgroundColor: story?.background_color || '#F3E8FF' }}
+                            style={{ backgroundColor: formatColor(story?.background_color) }}
                         >
                             {story ? (
                                 story.image_url ? (

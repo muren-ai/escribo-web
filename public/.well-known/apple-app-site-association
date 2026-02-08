@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "7JLWRCQ777.io.supabase.pnkbyaesdpkaqcjteone",
+        "paths": [ "/user/*", "/g/*" ]
+      }
+    ]
+  }
+}

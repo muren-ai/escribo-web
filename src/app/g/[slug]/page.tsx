@@ -109,36 +109,52 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
                 {/* Story Card */}
                 <div className="w-full max-w-[280px] sm:max-w-sm flex flex-col items-center">
 
-                    <div className="relative w-full aspect-[4/5] bg-gray-100 rounded-2xl overflow-hidden shadow-2xl border-[4px] sm:border-[6px] border-white ring-1 ring-black/5">
+                    <div className="relative w-full aspect-[9/16] bg-black rounded-2xl overflow-hidden shadow-2xl border-[4px] sm:border-[6px] border-white ring-1 ring-black/5">
+                        {/* Background Container (Can be color or blurred image) */}
                         <div
-                            className="absolute inset-0 flex flex-col items-center justify-center p-6 sm:p-8 text-center transition-colors duration-500"
+                            className="absolute inset-0 flex flex-col items-center justify-center transition-colors duration-500 overflow-hidden"
                             style={{ backgroundColor: formatColor(story?.background_color) }}
                         >
                             {story ? (
                                 story.image_url ? (
                                     <>
-                                        <img
-                                            src={story.image_url}
-                                            alt="Story"
-                                            className="absolute inset-0 w-full h-full object-cover"
-                                        />
+                                        {/* Layer 1: Blurred Background Fill */}
+                                        <div className="absolute inset-0 w-full h-full overflow-hidden">
+                                            <img
+                                                src={story.image_url}
+                                                alt=""
+                                                className="w-full h-full object-cover blur-3xl scale-125 opacity-70"
+                                            />
+                                            {/* Dark overlay to ensure text/controls pop if needed */}
+                                            <div className="absolute inset-0 bg-black/20" />
+                                        </div>
+
+                                        {/* Layer 2: Main Image (Contained) */}
+                                        <div className="relative z-10 w-full h-full flex items-center justify-center p-0.5">
+                                            <img
+                                                src={story.image_url}
+                                                alt="Story"
+                                                className="max-w-full max-h-full object-contain shadow-sm"
+                                            />
+                                        </div>
+
                                         {/* Gradient Overlay for text visibility if needed */}
                                         {story.content && story.content !== '📷 [Image Story]' && (
-                                            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-6 pt-20">
-                                                <p className="text-white text-xl font-medium leading-snug font-display">
+                                            <div className="absolute z-20 bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-24">
+                                                <p className="text-white text-xl font-medium leading-snug font-display text-center drop-shadow-md">
                                                     "{story.content}"
                                                 </p>
                                             </div>
                                         )}
                                     </>
                                 ) : (
-                                    <div className="flex flex-col items-center justify-center h-full max-h-full overflow-y-auto w-full no-scrollbar pb-14 sm:pb-16">
+                                    <div className="relative z-10 flex flex-col items-center justify-center h-full max-h-full overflow-y-auto w-full no-scrollbar pb-14 sm:pb-16 p-6">
                                         {story.emoji && (
                                             <div className="text-7xl sm:text-8xl md:text-9xl mb-4 sm:mb-6 animate-in zoom-in duration-700 drop-shadow-sm transform hover:scale-110 transition-transform cursor-default">
                                                 {story.emoji}
                                             </div>
                                         )}
-                                        <p className="text-xl sm:text-2xl md:text-3xl font-medium text-slate-800 max-w-sm leading-snug font-display px-2">
+                                        <p className="text-xl sm:text-2xl md:text-3xl font-medium text-slate-800 max-w-sm leading-snug font-display px-2 text-center">
                                             "{story.content}"
                                         </p>
                                         <p className="mt-6 sm:mt-8 text-xs font-semibold opacity-40 uppercase tracking-[0.2em] text-slate-900">
@@ -152,7 +168,6 @@ export default async function GarmentPage({ params }: { params: Promise<{ slug: 
                                     <p className="text-lg font-medium">No story yet</p>
                                 </div>
                             )}
-
 
                         </div>
                     </div>

@@ -54,7 +54,17 @@ export default function SafetyStandards() {
                         Escribo complies with all regional and national laws regarding child safety. We cooperate fully with law enforcement agencies in their investigations of illegal activity involving minors on our platform.
                     </p>
 
-                    <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">5. Contact Information</h2>
+                    <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">5. Age Suitability & Community Standards</h2>
+                    <p>
+                        Escribo is designed for an audience aged 13 and older. We maintain our age suitability through:
+                    </p>
+                    <ul className="list-disc pl-6 space-y-1 mb-4">
+                        <li><strong>Safe Interaction:</strong> Direct messaging is limited to comments and stories where users can be reported or blocked instantly.</li>
+                        <li><strong>Standard Guidelines:</strong> Our Community Guidelines prohibit mature themes, ensuring the feed remains appropriate for teenagers and adults alike.</li>
+                        <li><strong>Guardian Resources:</strong> We encourage parents to use device-level parental controls (iOS/Android) to monitor app usage.</li>
+                    </ul>
+
+                    <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">6. Contact Information</h2>
                     <p>
                         For inquiries regarding our safety practices or to report compliance concerns, please contact our designated point of contact:
                     </p>
